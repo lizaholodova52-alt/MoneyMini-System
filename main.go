@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
-	"money-transfer/payment"
-	"money-transfer/user"
+	"money-system/paysystem"
+	"money-system/user"
 	"sync"
 )
 
 func main() {
 	// Создаём платёжную систему.
-	ps := &payment.PaymentSystem{}
+	ps := &paysystem.PaymentSystem{}
 
 	// Создаём пользователей.
 	fmt.Println("Создаю UserID: 1 с балансом 1000")
@@ -35,13 +35,13 @@ func main() {
 	fmt.Println("Перевожу с UserID: 1 на UserID: 2 сумму 200")
 	fmt.Println("Перевожу с UserID: 2 на UserID: 1 сумму 50")
 
-	t1 := payment.Transaction{
+	t1 := paysystem.Transaction{
 		FromUserID: "1",
 		ToUserID:   "2",
 		Amount:     200,
 	}
 
-	t2 := payment.Transaction{
+	t2 := paysystem.Transaction{
 		FromUserID: "2",
 		ToUserID:   "1",
 		Amount:     50,
@@ -53,7 +53,7 @@ func main() {
 
 	// Создаём буферизированный канал.
 	ch := make(
-		chan payment.Transaction,
+		chan paysystem.Transaction,
 		len(ps.TransactionQueue),
 	)
 
