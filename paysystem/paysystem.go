@@ -6,8 +6,8 @@ import (
 )
 
 type Transaction struct {
-	FromUserID string
-	ToUserID   string
+	FromUID string
+	ToUID   string
 	Amount     float64
 }
 
@@ -33,30 +33,30 @@ func (ps *PaymentSystem) AddTransaction(t Transaction) {
 func (ps *PaymentSystem) ProcessingTransactions() error {
 	for _, t := range ps.TransactionQueue {
 
-		// Ищем пользователя, который отправляет деньги
-		fromUser, ok := ps.users[t.FromUserID]
+
+		fromUser, ok := ps.users[t.FromUID]
 		if !ok {
 			return fmt.Errorf(
 				"Пользователь %v не найден",
-				 t.FromUserID)
+				 t.FromUID)
 		}
 
-		// Ищем пользователя, который получает деньги
-		toUser, ok := ps.users[t.ToUserID]
+
+		toUser, ok := ps.users[t.ToUID]
 		if !ok {
 			return fmt.Errorf(
 				"Пользователь %v не найден",
-				 t.ToUserID)
+				 t.ToUID)
 		}
 
-		// Снимаем деньги
+
 		if !fromUser.Withdraw(t.Amount) {
 			return fmt.Errorf(
 				"Недостаточно средств у пользователя %v",
-				 t.FromUserID)
+				 t.FromUID)
 		}
 
-		// Начисляем деньги
+
 		toUser.Deposit(t.Amount)
 	}
 

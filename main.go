@@ -27,19 +27,18 @@ func main() {
 	ps.AddUser(user1)
 	ps.AddUser(user2)
 
-	// Подсказка
 	fmt.Println("Перевожу с UserID: 1 на UserID: 2 сумму в размере 200")
 	fmt.Println("Перевожу с UserID: 2 на UserID: 1 сумму в размере 50")
 
 
 	ps.AddTransaction(paysystem.Transaction{
-		FromUserID: "1",
-		ToUserID:   "2",
+		FromUID: "1",
+		ToUID:   "2",
 		Amount:     200,
 	})
 	ps.AddTransaction(paysystem.Transaction{
-		FromUserID: "2",
-		ToUserID:   "1",
+		FromUID: "2",
+		ToUID:   "1",
 		Amount:     50,
 	})
 
