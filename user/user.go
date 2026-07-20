@@ -18,7 +18,7 @@ func (u *User) Deposit(amount float64) {
 	defer u.mu.Unlock()
 
 	if amount <= 0 {
-    	fmt.Println("Сумма не может быть меньше или равна нулю")
+    	fmt.Println("Сумма не должна быть меньше или равна нулю")
 	}
 	
 	u.Balance += amount
@@ -31,7 +31,7 @@ func (u *User) Withdraw(amount float64) error {
 	defer u.mu.Unlock()
 	
 	if amount <= 0 {
-    	return fmt.Errorf("Сумма не может быть меньше или равна нулю")
+    	return fmt.Errorf("Сумма не должна быть меньше или равна нулю")
 	}
 	
 	if u.Balance < amount {

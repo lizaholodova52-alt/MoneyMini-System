@@ -49,7 +49,9 @@ func (ps *PaymentSystem) ProcessingTransaction(t Transaction) error {
 
 	err := fromUser.Withdraw(t.Amount)
 	if err != nil {
-		return fmt.Errorf("ошибка снятия у пользователя %v: %v", t.FromUID, err)
+		return fmt.Errorf("ошибка снятия у пользователя %v: %v", 
+			t.FromUID,
+			err)
 	}
 
 
