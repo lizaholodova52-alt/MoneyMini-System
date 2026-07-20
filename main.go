@@ -48,8 +48,7 @@ func main() {
 		fmt.Println("Ошибка при обработке транзакций:", err)
 	}
 
-	// Подсказка
 	fmt.Println("Итого")
-	fmt.Println("У первого пользователя должно получиться 850")
-	fmt.Println("У второго пользователя должно получиться 650")
+	fmt.Printf("UserID: 1, Баланс: %.2f\n", user1.Balance)
+	fmt.Printf("UserID: 2, Баланс: %.2f\n", user2.Balance)
 }
