@@ -54,8 +54,8 @@ func (ps *PaymentSystem) ProcessingTransactions() error {
 		if err != nil {
 			return fmt.Errorf(
 				"ошибка снятия у пользователя %v: %v",
-				t.FromUID,
-				err)
+					t.FromUID,
+					err)
 		}
 
 		toUser.Deposit(t.Amount)
