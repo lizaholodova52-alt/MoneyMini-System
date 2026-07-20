@@ -11,7 +11,6 @@ type User struct {
 
 func (u *User) Deposit(amount float64) {
 
-
 	if amount <= 0 {
     	fmt.Println("Сумма не должна быть меньше или равна нулю")
 	}
