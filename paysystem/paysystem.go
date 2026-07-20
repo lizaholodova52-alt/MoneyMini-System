@@ -7,8 +7,8 @@ import (
 )
 
 type Transaction struct {
-	FromUserID string
-	ToUserID   string
+	FromUID string
+	ToUID   string
 	Amount     float64
 }
 
@@ -32,25 +32,25 @@ func (ps *PaymentSystem) AddTransaction(t Transaction) {
 }
 
 func (ps *PaymentSystem) ProcessingTransaction(t Transaction) error {
-	fromUser, ok := ps.users[t.FromUserID]
+	fromUser, ok := ps.users[t.FromUID]
 	if !ok {
 		return fmt.Errorf(
 			"Пользователь %v не найден",
-			 t.FromUserID)
+			 t.FromUID)
 	}
 
-	toUser, ok := ps.users[t.ToUserID]
+	toUser, ok := ps.users[t.ToUID]
 	if !ok {
 		return fmt.Errorf(
 			"Пользователь %v не найден",
-			 t.ToUserID)
+			 t.ToUID)
 	}
 
 
 	if !fromUser.Withdraw(t.Amount) {
 		return fmt.Errorf(
 			"Недостаточно средств у пользователя %v",
-			 t.FromUserID)
+			 t.FromUID)
 	}
 
 
@@ -70,6 +70,6 @@ func (ps *PaymentSystem) Worker(ch <-chan Transaction, wg *sync.WaitGroup) {
 			continue
 		}
 
-		fmt.Printf("Транзакция успешно обработана: %s -> %s, сумма: %.2f\n", t.FromUserID, t.ToUserID, t.Amount)
+		fmt.Printf("Транзакция обработана: %s -> %s, сумма: %.2f\n", t.FromUID, t.ToUID, t.Amount)
 	}
 }
