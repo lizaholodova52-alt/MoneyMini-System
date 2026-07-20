@@ -78,8 +78,6 @@ func main() {
 	wg.Wait()
 
 	fmt.Println("Итого")
-	fmt.Printf(
-		"У первого пользователя должно получиться 850, получилось %.2f\n", user1.Balance,)
-	fmt.Printf(
-		"У второго пользователя должно получиться 650, получилось %.2f\n", user2.Balance,)
+	fmt.Printf("UserID: 1, Баланс: %.2f\n", user1.Balance)
+	fmt.Printf("UserID: 2, Баланс: %.2f\n", user2.Balance)
 }
