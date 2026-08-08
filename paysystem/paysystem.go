@@ -7,21 +7,21 @@ import (
 )
 
 type Transaction struct {
-	FromUID string
-	ToUID   string
+	FromID string
+	ToID   string
 	Amount     float64
 }
 
 type PaymentSystem struct {
-	users map[string]*user.User
+	Users map[string]*user.User
 	TransactionQueue []Transaction
 }
 
 func (ps *PaymentSystem) AddUser(u *user.User) {
-	if ps.users == nil {
-		ps.users = make(map[string]*user.User)
+	if ps.Users == nil {
+		ps.Users = make(map[string]*user.User)
 	}
-	ps.users[u.ID] = u
+	ps.Users[u.ID] = u
 }
 
 func (ps *PaymentSystem) AddTransaction(t Transaction) {
@@ -32,25 +32,25 @@ func (ps *PaymentSystem) AddTransaction(t Transaction) {
 }
 
 func (ps *PaymentSystem) ProcessingTransaction(t Transaction) error {
-	fromUser, ok := ps.users[t.FromUID]
+	fromUser, ok := ps.Users[t.FromID]
 	if !ok {
 		return fmt.Errorf(
-			"Пользователь %v не найден",
-			 t.FromUID)
+			"User %v not found",
+			 t.FromID)
 	}
 
-	toUser, ok := ps.users[t.ToUID]
+	toUser, ok := ps.Users[t.ToID]
 	if !ok {
 		return fmt.Errorf(
-			"Пользователь %v не найден",
-			 t.ToUID)
+			"User %v not found",
+			 t.ToID)
 	}
 
 
 	err := fromUser.Withdraw(t.Amount)
 	if err != nil {
-		return fmt.Errorf("ошибка снятия у пользователя %v: %v", 
-			t.FromUID,
+		return fmt.Errorf("error withdrawing from user %v: %w", 
+			t.FromID,
 			err)
 	}
 
@@ -67,10 +67,10 @@ func (ps *PaymentSystem) Worker(ch <-chan Transaction, wg *sync.WaitGroup) {
 	for t := range ch {
 		err := ps.ProcessingTransaction(t)
 		if err != nil {
-			fmt.Println("Ошибка при обработке транзакции:", err)
+			fmt.Println("Transaction error:", err)
 			continue
 		}
 
-		fmt.Printf("Транзакция обработана: %s -> %s, сумма: %.2f\n", t.FromUID, t.ToUID, t.Amount)
+		fmt.Printf("Транзакция успешна: %s -> %s, сумма: %.2f\n", t.FromID, t.ToID, t.Amount)
 	}
 }

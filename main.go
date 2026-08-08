@@ -34,14 +34,14 @@ func main() {
 	fmt.Println("Перевожу с UserID: 2 на UserID: 1 сумму 50")
 
 	t1 := paysystem.Transaction{
-		FromUID: "1",
-		ToUID:   "2",
+		FromID: "1",
+		ToID:   "2",
 		Amount:     200,
 	}
 
 	t2 := paysystem.Transaction{
-		FromUID: "2",
-		ToUID:   "1",
+		FromID: "2",
+		ToID:   "1",
 		Amount:     50,
 	}
 
