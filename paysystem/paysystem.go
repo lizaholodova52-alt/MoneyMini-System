@@ -13,15 +13,15 @@ type Transaction struct {
 }
 
 type PaymentSystem struct {
-	users map[string]*user.User
+	Users map[string]*user.User
 	TransactionQueue []Transaction
 }
 
 func (ps *PaymentSystem) AddUser(u *user.User) {
-	if ps.users == nil {
-		ps.users = make(map[string]*user.User)
+	if ps.Users == nil {
+		ps.Users = make(map[string]*user.User)
 	}
-	ps.users[u.ID] = u
+	ps.Users[u.ID] = u
 }
 
 func (ps *PaymentSystem) AddTransaction(t Transaction) {
@@ -32,14 +32,14 @@ func (ps *PaymentSystem) AddTransaction(t Transaction) {
 }
 
 func (ps *PaymentSystem) ProcessTransaction(t Transaction) error {
-	fromUser, ok := ps.users[t.FromID]
+	fromUser, ok := ps.Users[t.FromID]
 	if !ok {
 		return fmt.Errorf(
 			"User %s not found",
 			 t.FromID)
 	}
 
-	toUser, ok := ps.users[t.ToID]
+	toUser, ok := ps.Users[t.ToID]
 	if !ok {
 		return fmt.Errorf(
 			"User %s not found",
