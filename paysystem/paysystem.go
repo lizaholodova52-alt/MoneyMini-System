@@ -6,21 +6,21 @@ import (
 )
 
 type Transaction struct {
-	FromUID string
-	ToUID   string
+	FromID string
+	ToID   string
 	Amount     float64
 }
 
 type PaymentSystem struct {
-	users map[string]*user.User
+	Users map[string]*user.User
 	TransactionQueue []Transaction
 }
 
 func (ps *PaymentSystem) AddUser(u *user.User) {
-	if ps.users == nil {
-		ps.users = make(map[string]*user.User)
+	if ps.Users == nil {
+		ps.Users = make(map[string]*user.User)
 	}
-	ps.users[u.ID] = u
+	ps.Users[u.ID] = u
 }
 
 func (ps *PaymentSystem) AddTransaction(t Transaction) {
@@ -30,36 +30,31 @@ func (ps *PaymentSystem) AddTransaction(t Transaction) {
 	ps.TransactionQueue = append(ps.TransactionQueue, t)
 }
 
-func (ps *PaymentSystem) ProcessingTransactions() error {
-	for _, t := range ps.TransactionQueue {
-
-
-		fromUser, ok := ps.users[t.FromUID]
+func (ps *PaymentSystem) ProcessTransaction(t Transaction) error {
+	fromUser, ok := ps.Users[t.FromID]
 		if !ok {
 			return fmt.Errorf(
-				"Пользователь %v не найден",
-				 t.FromUID)
+				"user %s not found",
+				 t.FromID)
 		}
 
 
-		toUser, ok := ps.users[t.ToUID]
+	toUser, ok := ps.Users[t.ToID]
 		if !ok {
 			return fmt.Errorf(
-				"Пользователь %v не найден",
-				 t.ToUID)
+				"user %s not found",
+				 t.ToID)
 		}
 
 
-		err := fromUser.Withdraw(t.Amount)
+	err := fromUser.Withdraw(t.Amount)
 		if err != nil {
 			return fmt.Errorf(
-				"ошибка снятия у пользователя %v: %v",
-					t.FromUID,
+				"withdraw error %s: %w",
+					t.FromID,
 					err)
 		}
 
-		toUser.Deposit(t.Amount)
-	}
-
+	toUser.Deposit(t.Amount)
 	return nil
 }

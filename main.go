@@ -32,20 +32,21 @@ func main() {
 
 
 	ps.AddTransaction(paysystem.Transaction{
-		FromUID: "1",
-		ToUID:   "2",
+		FromID: "1",
+		ToID:   "2",
 		Amount:     200,
 	})
 	ps.AddTransaction(paysystem.Transaction{
-		FromUID: "2",
-		ToUID:   "1",
+		FromID: "2",
+		ToID:   "1",
 		Amount:     50,
 	})
 
 	
-	err := ps.ProcessingTransactions()
-	if err != nil {
-		fmt.Println("Ошибка при обработке транзакций:", err)
+	for _, t := range ps.TransactionQueue {
+    	if err := ps.ProcessTransaction(t); err != nil {
+        	fmt.Println("Transaction error:", err)
+		}
 	}
 
 	fmt.Println("Итого")

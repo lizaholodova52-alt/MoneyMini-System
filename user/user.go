@@ -12,8 +12,9 @@ type User struct {
 func (u *User) Deposit(amount float64) {
 
 	if amount <= 0 {
-    	fmt.Println("Сумма не должна быть меньше или равна нулю")
-	}
+	 		fmt.Println("invalid amount")
+	 		return  	
+		}
 
 	u.Balance += amount
 	fmt.Println("Депозит выполнен.")
@@ -22,11 +23,11 @@ func (u *User) Deposit(amount float64) {
 func (u *User) Withdraw(amount float64) error {
 
 	if amount <= 0 {
-    	return fmt.Errorf("Сумма не должна быть меньше или равна нулю")
+    	return fmt.Errorf("invalid amount")
 	}
 	
 	if u.Balance < amount {
-    	return fmt.Errorf("недостаточно средств")
+    	return fmt.Errorf("insufficient funds")
 	}
 
 	u.Balance -= amount
