@@ -9,10 +9,11 @@ type User struct {
 }
 
 
-func (u *User) Deposit(amount float64) {
+func (u *User) Deposit(amount float64)  {
 
 	if amount <= 0 {
-    	fmt.Println("Сумма не должна быть меньше или равна нулю")
+		fmt.Println("Сумма не должна быть меньше или равна нулю")
+		return 
 	}
 
 	u.Balance += amount

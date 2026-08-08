@@ -18,9 +18,21 @@ func main() {
 		Balance: 500,
 	}
 
+	// Депозиты
 	user1.Deposit(200)
-	user2.Withdraw(50)
+	fmt.Printf("UserID: %s, Баланс: %.2f\n", user1.ID, user1.Balance)
 
-	fmt.Printf("UserID: 1, Баланс: %.2f\n", user1.Balance)
-	fmt.Printf("UserID: 2, Баланс: %.2f\n", user2.Balance)
+	user1.Deposit(100)
+	fmt.Printf("UserID: %s, Баланс: %.2f\n", user1.ID, user1.Balance)
+
+	// Снятия
+	if err := user2.Withdraw(50); err != nil {
+		fmt.Println("Ошибка:", err)
+	}
+	fmt.Printf("UserID: %s, Баланс: %.2f\n", user2.ID, user2.Balance)
+
+	if err := user2.Withdraw(100); err != nil {
+		fmt.Println("Ошибка:", err)
+	}
+	fmt.Printf("UserID: %s, Баланс: %.2f\n", user2.ID, user2.Balance)
 }
